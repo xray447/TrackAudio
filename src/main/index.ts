@@ -384,19 +384,19 @@ app
     if (bootstrapOutput.needUpdate) {
       dialog.showMessageBoxSync({
         type: 'error',
-        message: 'A new mandatory version is available, please update in order to continue.',
+        message: 'A new version is available.',
         buttons: ['OK']
       });
-      app.quit();
+      //app.quit();
     }
 
     if (!bootstrapOutput.canRun) {
       dialog.showMessageBoxSync({
         type: 'error',
-        message: 'This application cannot run on this platform.',
+        message: 'Connection to GitHub is not available or a new version is available.',
         buttons: ['OK']
       });
-      app.quit();
+      //app.quit();
     }
 
     version = bootstrapOutput.version;
