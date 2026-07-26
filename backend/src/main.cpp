@@ -903,7 +903,7 @@ VersionCheckResponse CheckVersionSync()
     // We force do a mandatory version check, if an update is needed, the
     // programme won't run
 
-    try {
+    /*try {
         httplib::Client client(VERSION_CHECK_BASE_URL);
         client.set_connection_timeout(10);
         client.set_read_timeout(10);
@@ -933,7 +933,7 @@ VersionCheckResponse CheckVersionSync()
         MainThreadShared::ShouldRun = false;
         PLOGE << "Error parsing version: " << e.what();
         return { false, false };
-    }
+    }*/
 
     return { true, false };
 }
