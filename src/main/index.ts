@@ -506,6 +506,10 @@ ipcMain.on('set-radio-to-max-volume-on-tx', (_, radioToMaxVolumeOnTx: boolean) =
   configManager.updateConfig({ radioToMaxVolumeOnTx });
 });
 
+ipcMain.on('set-sort-stations-by-afv-order', (_, sortStationsByAfvOrder: boolean) => {
+  configManager.updateConfig({ sortStationsByAfvOrder });
+});
+
 ipcMain.on('set-ptt-release-sound-enabled', (_, pttReleaseSoundEnabled: boolean) => {
   configManager.updateConfig({ pttReleaseSoundEnabled });
   TrackAudioAfv.SetPttReleaseSoundEnabled(pttReleaseSoundEnabled);
@@ -670,8 +674,8 @@ ipcMain.handle('audio-is-frequency-active', (_, frequency: number) => {
   return TrackAudioAfv.IsFrequencyActive(frequency);
 });
 
-ipcMain.handle('get-station', (_, callsign: string) => {
-  TrackAudioAfv.GetStation(callsign);
+ipcMain.handle('get-station', (_, callsign: string, getVccs: boolean) => {
+  TrackAudioAfv.GetStation(callsign, getVccs);
 });
 
 ipcMain.handle('refresh-station', (_, callsign: string) => {

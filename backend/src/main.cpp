@@ -317,13 +317,18 @@ void RegisterCallback(const Napi::CallbackInfo& info)
 
 void GetStation(const Napi::CallbackInfo& info)
 {
+    
     if (!mClient || !mClient->IsVoiceConnected()) {
         return;
     }
-
+    
     auto callsign = info[0].As<Napi::String>().Utf8Value();
     mClient->GetStation(callsign);
-    mClient->FetchStationVccs(callsign);
+    
+    bool addVccs = info[1].As<Napi::Boolean>().Value();
+    if (addVccs) {
+        mClient->FetchStationVccs(callsign);
+    }
 }
 
 void RefreshStation(const Napi::CallbackInfo& info)
@@ -730,6 +735,11 @@ void HandleAfvEvents()
                 stationJson["name"] = station.name;
                 stationJson["frequency"] = station.frequency;
                 stationJson["frequencyAlias"] = station.frequencyAlias;
+                if (callsign == event.stationName) {
+                    stationJson["afvOrder"] = 0;
+                } else if (station.vccsOrder.has_value()) {
+                    stationJson["afvOrder"] = station.vccsOrder.value() + 1;
+                }
 
                 NapiHelpers::callElectron("StationDataReceived", callsign, stationJson.dump());
                 if (MainThreadShared::mApiServer)

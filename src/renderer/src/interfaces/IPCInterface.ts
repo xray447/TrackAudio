@@ -25,6 +25,7 @@ class IPCInterface {
         utilStoreState.setShowExpandedRxInfo(config.showExpandedRx);
         utilStoreState.setTransparentMiniMode(config.transparentMiniMode);
         utilStoreState.setRadioToMaxVolumeOnTX(config.radioToMaxVolumeOnTx);
+        utilStoreState.setSortStationsByAfvOrder(config.sortStationsByAfvOrder);
       })
       .catch((err: unknown) => {
         window.api.log.error(err as string);
@@ -157,7 +158,7 @@ class IPCInterface {
       sessionStoreState.setIsConnecting(false);
       sessionStoreState.setIsConnected(true);
       if (sessionStoreState.getIsAtc()) {
-        void window.api.GetStation(sessionStoreState.getStationCallsign());
+        void window.api.GetStation(sessionStoreState.getStationCallsign(), true);
       }
     });
 

@@ -41,6 +41,9 @@ export const api = {
   setRadioToMaxVolumeOnTX: (state: boolean) => {
     ipcRenderer.send('set-radio-to-max-volume-on-tx', state);
   },
+  setSortStationsByAfvOrder: (state: boolean) => {
+    ipcRenderer.send('set-sort-stations-by-afv-order', state);
+  },
   setPttReleaseSoundEnabled: (enabled: boolean) => {
     ipcRenderer.send('set-ptt-release-sound-enabled', enabled);
   },
@@ -74,7 +77,7 @@ export const api = {
   setCid: (cid: string) => ipcRenderer.invoke('set-cid', cid),
   setPassword: (password: string) => ipcRenderer.invoke('set-password', password),
 
-  GetStation: (callsign: string) => ipcRenderer.invoke('get-station', callsign),
+  GetStation: (callsign: string, getVccs: boolean) => ipcRenderer.invoke('get-station', callsign, getVccs),
   RefreshStation: (callsign: string) => ipcRenderer.invoke('refresh-station', callsign),
 
   addFrequency: (frequency: number, callsign: string, outputVolume?: number) =>
